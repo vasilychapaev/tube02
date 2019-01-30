@@ -13,12 +13,10 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        factory(App\User::class, 50)->create()->each(function ($user) {
-            $user->posts()->save(factory(App\Post::class)->make());
-        });
+
         factory(User::class, 10)->create()->each(function ($user){
             $user->videos()->saveMany(
-                factory(Video::class)->make()
+                factory(Video::class, rand(1, 10))->make()
             );
 
         });
