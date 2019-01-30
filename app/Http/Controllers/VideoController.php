@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\SlugHelper;
 use App\Models\Video;
 use App\User;
 use Illuminate\Http\Request;
@@ -18,7 +19,7 @@ class VideoController extends Controller
     public function index()
     {
         //
-        $directory = 'videos/'.Auth::user()->id;
+        $directory = 'videos/' . Auth::user()->id;
         $files = Storage::allFiles($directory);
 
         return view('video.index', compact(['files']));
@@ -39,7 +40,7 @@ class VideoController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -50,20 +51,16 @@ class VideoController extends Controller
             'description' => 'required',
         ]);
 
-        $userId = Auth::user()->id;
-        $file_path = $request->file('usermovie')->storeAs(
-            'videos/'.$userId,
-            \Slug::make(pathinfo($request->file('usermovie')->getClientOriginalName(), PATHINFO_FILENAME)).
-            '.'.$request->file('usermovie')->extension()
-        );
 
-        $video = new Video();
-        $video->fill($request->only(['name', 'description']));
-        $video->user_id = $userId;
-        $video->file_path = $file_path;
-        if (!$video->description)
-            $video->description = '';
-        $video->save();
+        $file_path = $request->file('usermovie')->storeAs(
+            'videos/' . Auth::user()->id,
+            \Slug::make(pathinfo($request->file('usermovie')->getClientOriginalName(), PATHINFO_FILENAME)) .
+            '.' . $request->file('usermovie')->extension()
+        );
+        $data = $request->only(['name', 'description']);
+        $data['user_id'] = Auth::user()->id;
+        $data['file_path'] = $file_path;
+        $video = Video::create($data);
 
         redirect()->route('video.index');
     }
@@ -71,7 +68,7 @@ class VideoController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Video  $video
+     * @param  \App\Models\Video $video
      * @return \Illuminate\Http\Response
      */
     public function show(Video $video)
@@ -83,7 +80,7 @@ class VideoController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Video  $video
+     * @param  \App\Models\Video $video
      * @return \Illuminate\Http\Response
      */
     public function edit(Video $video)
@@ -95,8 +92,8 @@ class VideoController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Video  $video
+     * @param  \Illuminate\Http\Request $request
+     * @param  \App\Models\Video $video
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, Video $video)
@@ -107,7 +104,7 @@ class VideoController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Video  $video
+     * @param  \App\Models\Video $video
      * @return \Illuminate\Http\Response
      */
     public function destroy(Video $video)
