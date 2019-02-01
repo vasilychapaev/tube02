@@ -14,7 +14,7 @@
                 @endif
 
                 <div class="card">
-                    <div class="card-header">Video Create</div>
+                    <div class="card-header">Добавить видео</div>
 
                     <div class="card-body">
 
@@ -39,7 +39,7 @@
                                 <textarea class="form-control" name="description" id="description" placeholder="Как я провел лето">{{old('description')}}</textarea>
                             </div>
 
-                            <button type="submit" class="btn btn-primary">Отправить</button>
+                            <button type="submit" class="btn btn-primary">Добавить</button>
 
                         </form>
 

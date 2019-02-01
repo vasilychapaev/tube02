@@ -11,6 +11,7 @@
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
+    <script src="{{ asset('js/custom.js') }}" defer></script>
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
@@ -20,6 +21,7 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/custom.css') }}?{{time()}}" rel="stylesheet">
 </head>
 <body>
     <div id="app">
@@ -35,8 +37,22 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav mr-auto">
-
+                        <ul class="nav justify-content-end">
+                            <li class="nav-item">
+                                <a class="nav-link {{ request()->is('video')?'active':'' }}" href="{{ route('video.index') }}">Мои видео</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link {{ request()->is('playlist')?'active':'' }}" href="{{ route('playlist.index') }}">Плейлисты</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#">Статистика</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#">Заявка на контент</a>
+                            </li>
+                        </ul>
                     </ul>
+
 
                     <!-- Right Side Of Navbar -->
                     <ul class="navbar-nav ml-auto">
@@ -45,7 +61,7 @@
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
                             </li>
-                            @if (Route::has('register'))
+                            @if (Route::has('register') and false)
                                 <li class="nav-item">
                                     <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
                                 </li>

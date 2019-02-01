@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Models\Playlist;
 use App\Models\Video;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
@@ -31,5 +32,9 @@ class User extends Authenticatable
 
     public function Videos() {
         return $this->hasMany(Video::class);
+    }
+
+    public function Playlists() {
+        return $this->hasMany(Playlist::class);
     }
 }

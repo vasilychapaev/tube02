@@ -25,8 +25,8 @@ class VideoRequest extends FormRequest
     {
         return [
             'name' => 'required|min:1',
-            'usermovie' => 'required',
-            'description' => 'required',
+            'usermovie' => 'required|mimes:mp4, avi, mov',
+//            'description' => 'required',
         ];
     }
 
@@ -35,7 +35,8 @@ class VideoRequest extends FormRequest
         return [
             'name.required' => 'Поле "Название" обазательно для заполнения',
 //            'name.min' => 'Поле name должно быть более 1 символа',
-//            'usermovie.required' => 'Файл не выбран',
+            'usermovie.required' => 'Файл не выбран',
+            'usermovie.mimes' => 'Допустимые форматы файлов: :values',
 //            'description.required' => 'Не заполнено поле description',
         ];
     }

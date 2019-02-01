@@ -3,13 +3,19 @@
 @section('content')
     <div class="container">
         <div class="row justify-content-center">
-            <div class="col-md-8">
+            <div class="col-md-12">
                 <div class="card">
-                    <div class="card-header">Video Detail Show</div>
+                    <div class="card-header">{{ $video->name }}</div>
 
                     <div class="card-body">
 
-                        <iframe width="560" height="315" src="https://www.youtube.com/embed/6C7opaKZwEE" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                        <div>
+                            {{ $video->description }}
+                        </div>
+
+                        <video class="responsive-video" id="video_player" controls autoplay="autoplay">
+                            <source src="{{ asset('storage/'.$video->file_path) }}" type="video/mp4" id="video_source">
+                        </video>
 
                     </div>
                 </div>
