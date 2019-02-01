@@ -15,6 +15,9 @@
                                 <div class="form-group col-md-8">
                                     <label for="name">Название</label>
                                     <input type="text" class="form-control" name="name" id="name" placeholder="Введите название видео">
+                                    @if ($errors->has('name'))
+                                        <small id="name" class="form-text text-muted">Поле должно быть заполнено</small>
+                                    @endif
                                 </div>
                                 <div class="form-group col-md-4">
                                     <label for="usermovie">Файл</label>
@@ -27,11 +30,13 @@
                                 <textarea class="form-control" name="description" id="description" placeholder="Как я провел лето"></textarea>
                             </div>
 
-                            @foreach($errors->all() as $error)
+                            @if ($errors)
                                 <div class="alert alert-danger">
-                                    @dump($error)
+                                @foreach($errors->all() as $error)
+                                    <div>{{$error}}</div>
+                                @endforeach
                                 </div>
-                            @endforeach
+                            @endif
 
                             <button type="submit" class="btn btn-primary">Отправить</button>
                         </form>

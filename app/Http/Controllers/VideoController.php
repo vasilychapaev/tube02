@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\VideoRequest;
 use App\Models\Video;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Lang;
 use Illuminate\Support\Facades\Storage;
 
 class VideoController extends Controller
@@ -41,13 +43,8 @@ class VideoController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(VideoRequest $request)
     {
-        $request->validate([
-            'name' => 'required|min:1',
-            'usermovie' => 'required',
-            'description' => 'required',
-        ]);
 
         $userId = Auth::user()->id;
         $file_path = $request->file('usermovie')->storeAs(
