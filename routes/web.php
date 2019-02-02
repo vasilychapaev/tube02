@@ -18,5 +18,7 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
-Route::resource('video', 'VideoController');
-Route::resource('playlist', 'PlaylistController');
+Route::resource('video', 'VideoController')->middleware('auth');
+Route::resource('playlist', 'PlaylistController')->middleware('auth');
+
+Route::get('statistics', 'StatisticController@index')->middleware('auth');

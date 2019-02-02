@@ -1,0 +1,7 @@
+.navbar-brand {
+    margin-top: -4px;
+}
+
+.modal-dialog {max-width:600px}
+
+#video_player {width: 100%}

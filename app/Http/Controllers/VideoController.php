@@ -63,6 +63,7 @@ class VideoController extends Controller
      */
     public function show(Video $video)
     {
+//        dd(asset('storage/'.$video->file_path));
 
         return view('video.show', compact(['video']));
     }

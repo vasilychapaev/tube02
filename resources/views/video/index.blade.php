@@ -35,19 +35,23 @@
                             <tbody>
                             @foreach($videos as $video)
                             <tr>
-                                <td>{{$video->id}}</td>
-                                <td>
-                                    {{$video->name}}
-                                    <a href="#">preview popup</a> <br>
-                                    <small>{{$video->description}}</small>
-                                </td>
+                                <td>{{ $video->id }}</td>
+                                <td>{{ $video->name }} <small>{{ $video->description }}</small></td>
                                 <td>00:00</td>
                                 <td>
-                                    <a href="{{route('video.edit', $video->id)}}" class="btn btn-primary"><i class="far fa-edit"></i></a>
-                                    <form action="{{route('video.destroy', $video->id)}}" method="post" class="d-inline">
+                                    <button type="button" data-toggle="modal" data-target="#videoModal" data-video="{{ asset('storage/'.$video->file_path) }}"
+                                            class="btn btn-primary btnModalOpen" title="{{ __('Preview') }}">
+                                        <i class="fas fa-external-link-alt"></i>
+                                    </button>
+
+                                    <a href="{{ route('video.show', $video->id) }}" class="btn btn-primary" title="Посмотреть"><i class="far fa-eye"></i></a>
+
+                                    <a href="{{ route('video.edit', $video->id) }}" class="btn btn-primary" title="Редактировать"><i class="far fa-edit"></i></a>
+
+                                    <form action="{{ route('video.destroy', $video->id) }}" method="post" class="d-inline">
                                         @csrf
                                         @method('DELETE')
-                                        <button type="submit" class="btn btn-primary"><i class="far fa-trash-alt"></i></button>
+                                        <button type="submit" class="btn btn-primary" title="Удалить"><i class="far fa-trash-alt"></i></button>
                                     </form>
 
                                 </td>
@@ -61,4 +65,24 @@
             </div>
         </div>
     </div>
+
+
+    <div class="modal fade" id="videoModal" tabindex="-1" role="dialog" aria-labelledby="videoModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="videoModalLabel">Предпросмотр</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <video class="responsive-video" controls id="video_player">
+                        <source src="#" type="video/mp4" id="video_source">
+                    </video>
+                </div>
+            </div>
+        </div>
+    </div>
+
 @endsection
