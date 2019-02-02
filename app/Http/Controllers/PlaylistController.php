@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\PlaylistRequest;
 use App\Models\Playlist;
+use App\Models\PlaylistsVideos;
+use App\Models\Video;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -104,5 +106,29 @@ class PlaylistController extends Controller
             $playlist->delete();
         }
         return redirect()->route('playlist.index')->with('status', "Плейлист {$name} удален");
+    }
+
+    public function test() {
+        $user_id = Auth::user()->id;
+        dump($user_id);
+        dump(Auth::user()->videos);
+//        dump(Auth::user()->videos()->where('video_id', '>', 5)->get());
+
+        exit;
+        dump(Auth::user()->playlists);
+
+        dump(Auth::user()->playlists()->where('playlist_id', 1)->get());
+
+//        $plv = new PlaylistsVideos(['user_id'=>1, 'playlist_id'=>2, 'movie_id'=>16]);
+//        $res = $plv->save();
+//        dump($res);
+
+
+        dd('test');
+    }
+
+
+    public function videoAdd(Request $request) {
+
     }
 }

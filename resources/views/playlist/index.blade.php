@@ -23,6 +23,8 @@
 
                     <div class="card-body">
 
+                        <h2>Видео </h2>
+
                         <table class="table table-hover">
                             <thead>
                             <tr>
@@ -38,7 +40,6 @@
                                     <td>{{$playlist->id}}</td>
                                     <td>
                                         {{$playlist->name}}
-                                        <a href="#">preview popup</a> <br>
                                         <small>{{$playlist->description}}</small>
                                     </td>
                                     {{--<td><span class="badge badge-dark">--}}{{-- count($playlist->videos) --}}{{--</span></td>--}}

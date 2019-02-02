@@ -12,6 +12,7 @@
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
     <script src="{{ asset('js/custom.js') }}" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.min.js" defer></script>
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
@@ -38,18 +39,10 @@
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav mr-auto">
                         <ul class="nav justify-content-end">
-                            <li class="nav-item">
-                                <a class="nav-link {{ request()->is('video')?'active':'' }}" href="{{ route('video.index') }}">Мои видео</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link {{ request()->is('playlist')?'active':'' }}" href="{{ route('playlist.index') }}">Плейлисты</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="#">Статистика</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="#">Заявка на контент</a>
-                            </li>
+                            <li class="nav-item"><a class="nav-link {{ request()->is('video')?'active':'' }}" href="{{ route('video.index') }}">Мои видео</a></li>
+                            <li class="nav-item"><a class="nav-link {{ request()->is('playlist')?'active':'' }}" href="{{ route('playlist.index') }}">Плейлисты</a></li>
+                            <li class="nav-item"><a class="nav-link {{ request()->is('statistics')?'active':'' }}" href="{{ route('statistics') }}">Статистика</a></li>
+                            <li class="nav-item"><a class="nav-link" href="#">Заявка на контент</a></li>
                         </ul>
                     </ul>
 
