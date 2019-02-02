@@ -57,7 +57,10 @@ class PlaylistController extends Controller
      */
     public function edit(Playlist $playlist)
     {
-        //
+
+        $playlist->with('videos')->get();
+        return view('playlist.edit', compact(['playlist']));
+
     }
 
     /**
