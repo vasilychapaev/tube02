@@ -15,7 +15,7 @@ class StatisticController extends Controller
     public function index()
     {
         //
-        dd('stat/index');
+        return view('statistic.index');
     }
 
     /**

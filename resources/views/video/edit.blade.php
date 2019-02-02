@@ -14,7 +14,7 @@
                 @endif
 
                 <div class="card">
-                    <div class="card-header">Video Edit</div>
+                    <div class="card-header">Изменить видео</div>
 
                     <div class="card-body">
 

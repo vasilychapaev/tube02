@@ -13,6 +13,6 @@ class Playlist extends Model
     }
 
     public function Videos() {
-        return $this->hasMany(Video::class);
+        return $this->belongsToMany(Video::class, 'playlists_videos', 'playlist_id', 'movie_id' );
     }
 }
