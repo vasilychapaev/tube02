@@ -9,4 +9,6 @@ class Video extends Model
     //
     protected $guarded = []; // не заносить в БД автоматом
 //    protected $fillable = [''];
+
+
 }

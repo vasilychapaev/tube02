@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\Text;
+use App\Http\Requests\VideoRequest;
 use App\Models\Video;
-use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
@@ -17,11 +18,9 @@ class VideoController extends Controller
      */
     public function index()
     {
-        //
-        $directory = 'videos/'.Auth::user()->id;
-        $files = Storage::allFiles($directory);
+        $videos = Auth::user()->videos;
 
-        return view('video.index', compact(['files']));
+        return view('video.index', compact(['videos']));
     }
 
     /**
@@ -32,7 +31,6 @@ class VideoController extends Controller
     public function create()
     {
         //
-
         return view('video.create');
     }
 
@@ -42,30 +40,19 @@ class VideoController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(VideoRequest $request)
     {
-        $request->validate([
-            'name' => 'required|min:1',
-            'usermovie' => 'required',
-            'description' => 'required',
-        ]);
-
-        $userId = Auth::user()->id;
-        $file_path = $request->file('usermovie')->storeAs(
-            'videos/'.$userId,
-            \Slug::make(pathinfo($request->file('usermovie')->getClientOriginalName(), PATHINFO_FILENAME)).
-            '.'.$request->file('usermovie')->extension()
+        $data = $request->only(['name', 'description']);
+        $data['user_id'] = Auth::user()->id;
+        $data['file_path'] = $request->file('usermovie')->storeAs(
+            'videos/'.Auth::user()->id,
+            Text::safeFilename( $request->file('usermovie')->getClientOriginalName() )
         );
 
-        $video = new Video();
-        $video->fill($request->only(['name', 'description']));
-        $video->user_id = $userId;
-        $video->file_path = $file_path;
-        if (!$video->description)
-            $video->description = '';
+        $video = new Video($data);
         $video->save();
 
-        redirect()->route('video.index');
+        return redirect()->route('video.index')->with('status', 'Видео успешно добавлено');
     }
 
     /**
@@ -76,8 +63,8 @@ class VideoController extends Controller
      */
     public function show(Video $video)
     {
-        //
-        return view('video.show');
+
+        return view('video.show', compact(['video']));
     }
 
     /**
@@ -88,8 +75,8 @@ class VideoController extends Controller
      */
     public function edit(Video $video)
     {
-        //
-        return view('video.edit');
+        debug($video->file_path);
+        return view('video.edit', compact(['video']));
     }
 
     /**
@@ -99,9 +86,13 @@ class VideoController extends Controller
      * @param  \App\Models\Video  $video
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Video $video)
+    public function update(VideoRequest $request, Video $video)
     {
-        //
+        $video->name = $request->name;
+        $video->description = $request->description;
+        $video->save();
+
+        return redirect()->route('video.index')->with('status', 'Видео обновлено');
     }
 
     /**
@@ -112,6 +103,9 @@ class VideoController extends Controller
      */
     public function destroy(Video $video)
     {
-        //
+        if ($video) {
+            $video->delete();
+        }
+        return redirect()->route('video.index')->with('status', 'Видео удалено успешно');
     }
 }
